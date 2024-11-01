@@ -48,10 +48,45 @@ railway domain
 ```
 
 ## Update Site and Redeploy
+<!--
 Update home page, `index.php`:
 ```php
 <h1>Hello World!</h1>
 <p>Happy to be here</p>
+```
+-->
+Create a SQLite database
+```sh
+sqlite3 data.db
+```
+
+Create a TABLE named `global` with a COLUMN named `message` with of TEXT type.
+```sql
+CREATE TABLE global (
+    message TEXT
+);
+```
+
+Insert a row with the value `Hello World`.
+```sql
+INSERT INTO global (message) VALUES ('Hello World');
+```
+
+Verify the insertion.
+```sql
+SELECT * FROM global;
+```
+
+Connect to the database in by updating `index.php`
+```php
+<?php
+$conn = new SQLite3('data.db');
+
+$result = $conn->query("SELECT message FROM global");
+
+$row = $result->fetchArray();
+echo "<h1>".$row['message']."</h1>";
+?>
 ```
 
 Test update locally:
